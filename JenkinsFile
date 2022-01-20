@@ -1,0 +1,29 @@
+pipeline {
+	agent any
+		stages {
+			stage('Github') {
+				steps {
+					echo 'Building...'
+					checkout([$class: 'GitSCM', branch: [[name: '*/main']], extension: [], userRemoteConfigs: [[credentialsId: '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', url: 'git@github.com:Caderonas/caesar-cipher.git']]])
+				}
+			}
+			stage('Test') {
+				steps {
+					echo 'Testing...'
+					sh './gradlew tasks --all'
+				}
+			}
+			stage('Build') {
+				steps {
+					echo 'Building...'
+					sh './gradlew clean build'
+				}
+			}
+			stage('Release') {
+				steps {
+					echo 'Release...'
+					sh 'java -jar build/libs/caesars-cipher.jar'
+				}
+			}
+		}
+}
