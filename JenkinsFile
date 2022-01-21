@@ -4,7 +4,6 @@ pipeline {
 			stage('Github') {
 				steps {
 					echo 'Building...'
-					sh 'git config --global --unset credential.helper'
 					checkout([$class: 'GitSCM', branch: [[name: '*/main']], extension: [], userRemoteConfigs: [[credentialsId: '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', url: 'git@github.com:Caderonas/caesar-cipher.git']]])
 				}
 			}
