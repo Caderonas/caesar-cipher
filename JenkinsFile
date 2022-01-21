@@ -4,7 +4,7 @@ pipeline {
 			stage('Github') {
 				steps {
 					echo 'Building...'
-					checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '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', url: 'git@github.com:Caderonas/caesar-cipher.git']]])
+					git branch: 'main', credentialsId: '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', url: 'git@github.com:Caderonas/caesar-cipher.git'
 				}
 			}
 			stage('Test') {
