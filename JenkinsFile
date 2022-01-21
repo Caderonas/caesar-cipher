@@ -4,6 +4,7 @@ pipeline {
 			stage('Github') {
 				steps {
 					echo 'Building...'
+					sh 'git config --global --unset credential.helper'
 					checkout([$class: 'GitSCM', branch: [[name: '*/main']], extension: [], userRemoteConfigs: [[credentialsId: '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', url: 'git@github.com:Caderonas/caesar-cipher.git']]])
 				}
 			}
@@ -21,8 +22,8 @@ pipeline {
 			}
 			stage('Release') {
 				steps {
-					echo 'Release...'
-					sh 'java -jar build/libs/caesars-cipher.jar'
+					sh 'gh release create'
+					sh 'gh release upload 0.1.1 caesar-cipher-0.1.1.jar'	
 				}
 			}
 		}
